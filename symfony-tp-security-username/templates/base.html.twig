@@ -25,21 +25,29 @@
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/login">login <span class="sr-only">(current)</span></a>
+        {% if is_granted('ROLE_USER') %}
+            <li>
+            <div class="nav-link disable">
+              <i class="fas fa-user"></i>
+              {% if app.user %}
+                <strong>{{ app.user.username }}</strong>
+              {% endif %}
+            </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="{{ path('app_logout') }}">{{'logout' | trans }} </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
+          {% else %}
+          <li>
+            <a class="nav-link" href="{{ path('app_login') }} ">{{ 'sign in '| trans}}</a>
           </li>
+          {% endif %}
           
            
         </ul>
         <form class="form-inline my-2 my-lg-0">
-          
-          <button class="btn btn-outline-success my-2 my-sm-0" href="/login" type="submit">Login</button>
+            
+          <button class="btn btn-outline-success my-2 my-sm-0"  type="submit"><a  href="/login" >{{'login' | trans }} </a></button>
+
         </form>
       </div>
     </nav>
